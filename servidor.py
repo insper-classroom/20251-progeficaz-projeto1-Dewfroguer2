@@ -1,25 +1,59 @@
-from flask import Flask, render_template_string, request, redirect
-import views
+from flask import Flask,render_template,request,redirect,url_for,flash
+import sqlite3 as sql
+app=Flask(__name__)
 
-app = Flask(__name__)
-
-NOTE_TEMPLATE = 1
-RESPONSE_TEMPLATE = 1
-
-app.static_folder = 'static'
-
-@app.route('/')
+@app.route("/")
+@app.route("/index")
 def index():
+    con=sql.connect("db_web.db")
+    con.row_factory=sql.Row
+    cur=con.cursor()
+    cur.execute("select * from users")
+    data=cur.fetchall()
+    return render_template("index.html",datas=data)
 
-    return render_template_string(views.index())
+@app.route("/add_user",methods=['POST','GET'])
+def add_note():
+    if request.method=='POST':
+        uname=request.form['uname']
+        contact=request.form['contact']
+        con=sql.connect("db_web.db")
+        cur=con.cursor()
+        cur.execute("insert into users(UNAME,CONTACT) values (?,?)",(uname,contact))
+        con.commit()
+        flash('User Added','success')
+        return redirect(url_for("index"))
+    return render_template("add_note.html")
 
-@app.route('/submit', methods=['POST'])
-def submit_form():
-    titulo = request.form.get('titulo') #Obtém o valor do campo 'titulo'
-    detalhes = request.form.get('detalhes') # obtém o valor do campo 'detalhes'
-
-    views.submit(titulo, detalhes)
-    return redirect('/')
-
-if __name__ == '__main__':
+@app.route("/edit_note/<string:uid>",methods=['POST','GET'])
+def edit_note(uid):
+    if request.method=='POST':
+        uname=request.form['uname']
+        contact=request.form['contact']
+        con=sql.connect("db_web.db")
+        cur=con.cursor()
+        cur.execute("update users set UNAME=?,CONTACT=? where UID=?",(uname,contact,uid))
+        con.commit()
+        flash('User Updated','success')
+        return redirect(url_for("index"))
+    
+    con=sql.connect("db_web.db")
+    con.row_factory=sql.Row
+    cur=con.cursor()
+    cur.execute("select * from users where UID=?",(uid,))
+    data=cur.fetchone()
+    con.close()
+    return render_template("edit_note.html",datas=data)
+    
+@app.route("/delete_note/<string:uid>",methods=['GET'])
+def delete_note(uid):
+    con=sql.connect("db_web.db")
+    cur=con.cursor()
+    cur.execute("delete from users where UID=?",(uid,))
+    con.commit()
+    flash('User Deleted','warning')
+    return redirect(url_for("index"))
+    
+if __name__=='__main__':
+    app.secret_key='admin123'
     app.run(debug=True)
