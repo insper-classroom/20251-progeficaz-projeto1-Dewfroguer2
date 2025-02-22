@@ -6,11 +6,11 @@
       <form method='post' action='{{url_for("add_note")}}'>
         <div class='form-group'>
           <label>Titulo</label>
-          <input type='text' name='uname' required class='form-control'>
+          <input type='text' name='titulo' required class='form-control'>
         </div>
         <div class='form-group'>
           <label>Detelhe</label>
-          <input type='text' name='contact' required class='form-control'>
+          <textarea name="detalhes" rows="5" cols="50">{{ detalhes }}</textarea>
         </div>
         <input type='submit' value='Submit' class='btn btn-primary'>
       </form>

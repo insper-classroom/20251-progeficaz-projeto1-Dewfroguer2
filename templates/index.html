@@ -3,11 +3,11 @@
   <div class="notas-container">
     {% for row in datas %}
       <div class="nota-card random-bg">
-        <h4>{{ row.UNAME }}</h4>
-        <p>{{ row.CONTACT }}</p>
+        <h4>{{ row.TITULO }}</h4>
+        <p>{{ row.DETALHES }}</p>
         <div class="nota-actions">
           <a href="{{ url_for('edit_note', uid=row.UID) }}" class="btn btn-primary">Editar</a>
-          <a href="{{ url_for('delete_note', uid=row.UID) }}" class="btn btn-danger" onclick="return confirm('Tem certeza?')">Excluir</a>
+          <a href="{{ url_for('delete_note', uid=row.UID) }}" class="btn btn-danger" >Excluir</a>
         </div>
       </div>
     {% endfor %}

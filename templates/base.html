@@ -11,13 +11,13 @@
 </head>
 <body>
 
-
-  <div class="barra">
-    <img class="imgs" src="{{ url_for('static', filename='img/logo-getit.png') }}">
-    <h1 class="centro"> Bloco de Notas </h1>
-    <p class='text-right centro'><a href='{{url_for("add_note")}}' class='btn btn-success '>Adicionar nota</a></p>
-  </div>
- 
+<div class="barra">
+    <div class="logo-container">
+        <img class="imgs" src="{{ url_for('static', filename='img/logo-getit.png') }}" alt="Logo">
+        <h1 class="titulo">Bloco de Notas</h1>
+    </div>
+    <a href="{{ url_for('add_note') }}" class="btn btn-success adicionar-nota">➕ Adicionar Nota</a>
+</div>
 
 
 <div class="espaco">

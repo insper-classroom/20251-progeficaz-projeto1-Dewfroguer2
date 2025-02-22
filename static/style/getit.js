@@ -13,3 +13,5 @@ function getRandomColor() {
       nota.style.backgroundColor = getRandomColor();
     });
   });
+
+  
