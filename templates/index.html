@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 {% block body %}
+  <div>
+    <a href="{{ url_for('add_note') }}" class="btn btn-success adicionar-nota add">➕ Adicionar Nota</a>
+  </div>
   <div class="notas-container">
     {% for row in datas %}
       <div class="nota-card random-bg">
@@ -12,4 +15,5 @@
       </div>
     {% endfor %}
   </div>
+
 {% endblock %}

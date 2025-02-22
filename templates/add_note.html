@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block body %}
-  <div class='row'>
-    <div class='col-5 mx-auto'>
+  <div class='row notas-container'>
+    <div class='col-5 mx-auto nota-card'>
       <h3>Adicionar nota</h3><hr>
       <form method='post' action='{{url_for("add_note")}}'>
         <div class='form-group'>
